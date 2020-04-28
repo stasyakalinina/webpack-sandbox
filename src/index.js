@@ -9,7 +9,7 @@ console.log(css.toString());
 const App = () => {
   return (
     <div>
-      <p>Hello world</p>
+      <p>This is Webpack React App</p>
       <img src={img} />
     </div>
   )

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack"
+    "start": "webpack-dev-server",
+    "build": "webpack --env.mode=production"
   },
   "author": "Anastasia Kalinina <stasya.kalinina@gmail.com>",
   "license": "ISC",
@@ -33,7 +34,8 @@
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.4",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "core-js": "^3.6.5",
