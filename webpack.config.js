@@ -6,8 +6,36 @@ module.exports = (env = {}) => {
   const isProd = mode === 'production';
   const isDev = mode === 'development';
 
+  const getStyleLoaders = () => {
+    return [
+      isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+      'css-loader'
+    ]
+  };
+
+  const getPlugins = () => {
+    const plugins = [
+      new HtmlWebpackPlugin({
+        template: 'public/index.html'
+      })
+    ];
+    if (isProd) {
+      plugins.push(
+        new MiniCssExtractPlugin({
+          filename: 'main-[hash:8].css'
+        })
+      )
+    }
+
+    return plugins;
+  }
+
   return {
     mode: isProd ? "production" : isDev && "development",
+
+    output: {
+      filename: isProd ? 'main-[hash:8].js' : undefined
+    },
 
     module: {
       rules: [
@@ -46,24 +74,17 @@ module.exports = (env = {}) => {
         //Loading css
         {
           test: /\.(css)$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader']
+          use: getStyleLoaders()
         },
         //Loading Sass
         {
           test: /\.(s[ca]ss)$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader','sass-loader']
+          use: [ ...getStyleLoaders(), 'sass-loader' ]
         },
       ]
     },
 
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: 'public/index.html'
-      }),
-      new MiniCssExtractPlugin({
-        filename: 'main-[hash:8].css'
-      })
-    ],
+    plugins: getPlugins(),
 
     devServer: {
       open: true
